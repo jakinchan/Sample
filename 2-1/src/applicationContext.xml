@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<!-- 1)データソースの設定 DriverManagerDataSourceクラスを利用する-->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- JDBCドライバクラス名の設定 -->
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<!-- JDBCの接続文字列の設定 -->
+		<property name="url">
+			<value>jdbc:mysql://localhost/spring</value>
+		</property>
+		<!-- MySQLのユーザIDの設定 -->
+		<property name="username">
+			<value>springuser</value>
+		</property>
+		<!-- MySQLのパスワードの設定 -->
+		<property name="password">
+			<value>springpassword</value>
+		</property>
+	</bean>
+
+	<bean id="menuUi" class="ui.MenuUi">
+		<property name="selectTeamUi" ref="selectTeamUi"></property>
+	</bean>
+
+	<bean id="teamDao" class="dao.impl.TeamDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="selectTeamUi" class="ui.SelectTeamUi">
+		<property name="teamDao" ref="teamDao"></property>
+	</bean>
+
+</beans>
